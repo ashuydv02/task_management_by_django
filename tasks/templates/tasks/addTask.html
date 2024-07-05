@@ -1,0 +1,30 @@
+{% extends 'tasks/base.html' %}
+    {% block content %}
+            <div class="col-6">
+                <h3>Add Task</h3>
+                <form action="{% url 'add_task' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="exampleInputtitle" class="form-label">Title</label>
+                      <input type="text" name="title" class="form-control" id="exampleInputtitle" placeholder="Title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputdesc" class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control" id="exampleInputdesc" placeholder="Description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputstatus" class="form-label">Status</label>
+                        <select class="form-select" name="status" id="exampleInputstatus" aria-label="Default select example">
+                            <option selected value="pending">Pending</option>
+                            <option value="in progess">In Progess</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputdate" class="form-label">Due Date</label>
+                        <input type="date" name="due_date" class="form-control" id="exampleInputdate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+    {% endblock %}

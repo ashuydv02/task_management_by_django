@@ -1,0 +1,44 @@
+{% extends 'tasks/base.html' %}
+    {% block content %}
+            <h1>Tasks</h1>
+            <table class="table table-hover">
+                <thead>
+                    <th>S No.</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                    <th>Date of Creation</th>
+                    <th>Last Updated</th>
+                    <th>Update</th>
+                </thead>
+                <tbody>
+                    {% for task in tasks%}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{task.title}}</td>
+                        <td class="w-25" id="slicedText">{{task.description}}</td>
+                        <td>{{task.status}}</td>
+                        <td>{{task.due_date}}</td>
+                        <td>{{task.created_on}}</td>
+                        <td>{{task.last_updated}}</td>
+                        <td>
+                            <a href="{% url 'delete' task.id %}"><button type="button" class="btn btn-danger" onclick="confirmation()">Delete</button></a>
+                            <a href="{% url 'edit' task.id %}"><button type="button" class="btn btn-secondary">Edit</button></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'add_task' %}"><button type="button" class="btn btn-primary">Create New Task</button></a>
+            <script>
+                function sliceText(elementId, maxLength) {
+                    var element = document.getElementById(elementId);
+                    var text = element.innerHTML;
+                    if (text.length > maxLength) {
+                        element.innerHTML = text.slice(0, maxLength) + '...';
+                    }
+                }
+                sliceText('slicedText', 30);
+            </script>        
+    {% endblock %}

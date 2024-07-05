@@ -1,0 +1,41 @@
+{% extends 'tasks/base.html' %}
+    {% block content %}
+            <div class="col-6">
+                <h3>Update Task</h3>
+                <form action="{% url 'edit' task.id %}" method="post">
+                    {% csrf_token %}
+                    {% if form %}
+                        {% for field in form %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{field.label}} : {{error}}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="mb-3">
+                      <label for="exampleInputtitle" class="form-label">Title</label>
+                      <input type="text" name="title" class="form-control" id="exampleInputtitle" value="{{task.title}}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputdesc" class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control" id="exampleInputdesc" value="{{task.description}}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputstatus" class="form-label">Status</label>
+                        <select class="form-select" name="status" id="exampleInputstatus" aria-label="Default select example">
+                            <option value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="in progess" {% if task.status == 'in progess' %}selected{% endif %}>In Progess</option>
+                            <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputdate" class="form-label">Due Date</label>
+                        <input type="date" name="due_date" class="form-control" id="exampleInputdate" value="{{ task.due_date|date:'Y-m-d' }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+    {% endblock %}
